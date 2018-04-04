@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Row, Col, Nav, NavItem, Button } from 'react-bootstrap';
 import Icon from 'react-fontawesome';
 import { WebListener, request } from 'taskcluster-client-web';
-import { isNil } from 'ramda';
+import { isNil, equals } from 'ramda';
 import Helmet from 'react-helmet';
 import PropsRoute from '../../components/PropsRoute';
 import Error from '../../components/Error';
@@ -207,7 +207,7 @@ export default class Inspector extends PureComponent {
               ({ status }) => status.taskId === task.status.taskId
             );
 
-            if (index > -1) {
+            if (index > -1 && !equals(reduction[index], task)) {
               reduction[index] = task; // eslint-disable-line no-param-reassign
             } else {
               reduction.push(task);

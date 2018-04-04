@@ -2,16 +2,13 @@ import { PureComponent } from 'react';
 import { array, string } from 'prop-types';
 import {
   Table,
-  Label,
   ButtonToolbar,
   DropdownButton,
   MenuItem
 } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { titleCase } from 'change-case';
-import Icon from 'react-fontawesome';
 import Loading from '../../components/Loading';
-import { labels } from '../../utils';
+import GroupDetailsTaskRow from './GroupDetailsTaskRow';
 
 const groups = [
   'completed',
@@ -101,22 +98,11 @@ export default class GroupDetails extends PureComponent {
           <tbody>
             {sortedTasks.length ? (
               sortedTasks.map((task, index) => (
-                <tr key={`inspector-task-row-${index}`}>
-                  <td>
-                    <Label bsSize="sm" bsStyle={labels[task.status.state]}>
-                      {task.status.state}
-                    </Label>
-                  </td>
-                  <td>
-                    <Link
-                      to={`/groups/${taskGroupId}/tasks/${
-                        task.status.taskId
-                      }/details`}
-                      replace>
-                      {task.task.metadata.name}&nbsp;&nbsp;&nbsp;<Icon name="long-arrow-right" />
-                    </Link>
-                  </td>
-                </tr>
+                <GroupDetailsTaskRow
+                  key={`inspector-task-row-${index}`}
+                  task={task}
+                  taskGroupId={taskGroupId}
+                />
               ))
             ) : (
               <tr colSpan={2}>
